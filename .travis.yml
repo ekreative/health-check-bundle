@@ -1,15 +1,15 @@
 sudo: false
 language: php
 php:
-    - 5.6
     - 5.5
+    - 5.6
     - 7.0
     - 7.1
 
 before_script:
     - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - composer selfupdate
-    - composer install --prefer-source
+    - composer install
 
 script:
     - ./vendor/bin/php-cs-fixer fix --dry-run --diff
