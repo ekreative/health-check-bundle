@@ -22,3 +22,9 @@ doctrine:
 ekreative_health_check:
     redis:
         - 'redis'
+
+services:
+    redis:
+        class: Redis
+        calls:
+            - [ connect, ['example.com', '6739', 1]]

@@ -20,6 +20,6 @@ class TestKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load($this->getRootDir().'/config_test.yml');
+        $loader->load($this->getRootDir().'/config_'.$this->getEnvironment().'.yml');
     }
 }

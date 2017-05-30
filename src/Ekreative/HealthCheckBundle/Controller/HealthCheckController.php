@@ -33,6 +33,15 @@ class HealthCheckController extends Controller
             }
         }
 
+        set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+            // error was suppressed with the @-operator
+            if (0 === error_reporting()) {
+                return false;
+            }
+
+            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+
         $redisServiceNames = $this->container->getParameter('ekreative_health_check.redis');
         $i = 0;
         $key = 'redis';
@@ -40,10 +49,12 @@ class HealthCheckController extends Controller
             $key .= "$i";
         }
         foreach ($redisServiceNames as $redisService) {
-            $data[$key] = $this->checkRedisConnection($this->container->get($redisService));
+            $data[$key] = $this->checkRedisConnection($redisService);
             ++$i;
             $key = "redis$i";
         }
+
+        restore_error_handler();
 
         $ok = array_reduce($data, function ($m, $v) {
             return $m && $v;
@@ -65,15 +76,19 @@ class HealthCheckController extends Controller
     }
 
     /**
+     * @param string $redisService
      * @return bool
      */
-    private function checkRedisConnection(\Redis $redis)
+    private function checkRedisConnection($redisService)
     {
         try {
+            $redis = $this->container->get($redisService);
             $redis->ping();
 
             return true;
         } catch (\RedisException $e) {
+            return false;
+        } catch (\ErrorException $e) {
             return false;
         }
     }

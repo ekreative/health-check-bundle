@@ -16,9 +16,7 @@ doctrine:
     dbal:
         connections:
             default:
-                driver: pdo_sqlite
-                path: '%kernel.root_dir%/cache/db.sqlite'
-
-ekreative_health_check:
-    redis:
-        - 'redis'
+                driver: pdo_mysql
+                host: 'example.com'
+                options:
+                    !php/const:PDO::ATTR_TIMEOUT: 1

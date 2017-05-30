@@ -58,6 +58,24 @@ ekreative_health_check:
     doctrine_enabled: false
 ```
 
+#### Timeout
+
+Its recommended to change the default PDO connection timeout so that your health
+check will fail faster
+
+Add this under connection setting
+
+```yaml
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_mysql
+                host: '%database_host%'
+                options:
+                    !php/const:PDO::ATTR_TIMEOUT: 5
+```
+
 ### Redis
 
 The bundle can also check that redis connections are working. You should add a list of
@@ -67,4 +85,19 @@ service names to check
 ekreative_health_check:
     redis:
         - 'redis'
+```
+
+#### Timeout
+
+Its recommended to change the default Redis connection timeout so that your health
+check will fail faster
+
+Add this to `connect` call for `\Redis`
+
+```yaml
+services:
+    kidslox.redis:
+        class: Redis
+        calls:
+            - [ connect, ['%redis_host%', '%redis_port%', 5]]
 ```
