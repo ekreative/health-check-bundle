@@ -33,7 +33,7 @@ class HealthCheckController extends Controller
             }
         }
 
-        set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, array $errcontext) {
             // error was suppressed with the @-operator
             if (0 === error_reporting()) {
                 return false;
@@ -77,6 +77,7 @@ class HealthCheckController extends Controller
 
     /**
      * @param string $redisService
+     *
      * @return bool
      */
     private function checkRedisConnection($redisService)
