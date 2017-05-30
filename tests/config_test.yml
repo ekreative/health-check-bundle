@@ -1,0 +1,29 @@
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    router:
+        resource: "%kernel.root_dir%/routing.yml"
+        strict_requirements: ~
+    secret: 'fake_secret'
+
+monolog:
+    handlers:
+        main:
+            type: console
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_sqlite
+                charset: UTF8
+                mapping_types:
+                    enum: string
+                path: '%kernel.root_dir%/cache/db.sqlite'
+                profiling: false
+
+
+ekreative_health_check:
+    redis:
+        - 'redis'

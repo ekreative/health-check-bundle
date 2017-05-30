@@ -1,0 +1,48 @@
+{
+    "name": "ekreative/health-check-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "A bundle that provides a simple /healthcheck route",
+    "keywords": ["healthcheck", "doctrine", "redis"],
+    "autoload": {
+        "psr-4": {
+            "Ekreative\\HealthCheckBundle\\": "src/Ekreative/HealthCheckBundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ekreative\\HealthCheckBundle\\": "tests/Ekreative/HealthCheckBundle/"
+        },
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ],
+        "classmap": [
+            "tests/TestKernel.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "symfony/symfony": "^3.2"
+    },
+    "require-dev": {
+        "ext-redis": "*",
+        "symfony/phpunit-bridge": "^3.0",
+        "doctrine/doctrine-bundle": "^1.6",
+        "phpunit/phpunit": "^4.1",
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "symfony/monolog-bundle": "^3.0.2"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "5.5.9"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fred Cox",
+            "email": "mcfedr@gmail.com"
+        }
+    ]
+}
