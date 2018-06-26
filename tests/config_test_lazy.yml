@@ -18,12 +18,11 @@ doctrine:
                 path: '%kernel.root_dir%/cache/db.sqlite'
 
 ekreative_health_check:
-    optional_redis:
+    redis:
         - 'redis'
 
 services:
     redis:
         class: Redis
-        factory: Ekreative\HealthCheckBundle\DependencyInjection\RedisFactory::get
-        arguments:
-            $host: 'example.com'
+        factory: Ekreative\HealthCheckBundle\Controller\HealthCheckControllerTest::getLazyRedis
+

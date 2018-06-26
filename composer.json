@@ -13,31 +13,23 @@
         "psr-4": {
             "Ekreative\\HealthCheckBundle\\": "tests/Ekreative/HealthCheckBundle/"
         },
-        "files": [
-            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
-        ],
         "classmap": [
             "tests/TestKernel.php"
         ]
     },
     "require": {
         "php": ">=5.5.9",
-        "sensio/framework-extra-bundle": "^3.0.2",
-        "symfony/symfony": "^3.2"
+        "sensio/framework-extra-bundle": "^3.0|^4.0|^5.0",
+        "symfony/framework-bundle": "^3.0|^4.0"
     },
     "require-dev": {
         "ext-redis": "*",
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-bundle": "^1.6",
-        "phpunit/phpunit": "^4.1",
+        "phpunit/phpunit": "^4.8|^5.0",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "symfony/monolog-bundle": "^3.0.2"
-    },
-    "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "5.5.9"
-        }
+        "symfony/monolog-bundle": "^3.0.2",
+        "symfony/browser-kit": "^3.0|^4.0"
     },
     "authors": [
         {

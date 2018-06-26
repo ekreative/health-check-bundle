@@ -1,7 +1,5 @@
 framework:
     test: ~
-    session:
-        storage_id: session.storage.mock_file
     router:
         resource: "%kernel.root_dir%/routing.yml"
         strict_requirements: ~
@@ -22,3 +20,8 @@ doctrine:
 ekreative_health_check:
     redis:
         - 'redis'
+
+services:
+    redis:
+        class: Redis
+        public: true

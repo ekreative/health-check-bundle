@@ -1,7 +1,5 @@
 framework:
     test: ~
-    session:
-        storage_id: session.storage.mock_file
     router:
         resource: "%kernel.root_dir%/routing.yml"
         strict_requirements: ~
@@ -26,5 +24,6 @@ ekreative_health_check:
 services:
     redis:
         class: Redis
-        calls:
-            - [ connect, ['example.com', '6739', 1]]
+        factory: Ekreative\HealthCheckBundle\DependencyInjection\RedisFactory::get
+        arguments:
+            $host: 'example.com'

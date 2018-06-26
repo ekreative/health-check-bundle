@@ -2,7 +2,10 @@
 
 namespace Ekreative\HealthCheckBundle\DependencyInjection;
 
+use Ekreative\HealthCheckBundle\Controller\HealthCheckController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class EkreativeHealthCheckExtension extends Extension
@@ -12,10 +15,27 @@ class EkreativeHealthCheckExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('ekreative_health_check.doctrine_enabled', $config['doctrine_enabled']);
-        $container->setParameter('ekreative_health_check.doctrine', $config['doctrine']);
-        $container->setParameter('ekreative_health_check.optional_doctrine', $config['optional_doctrine']);
-        $container->setParameter('ekreative_health_check.redis', $config['redis']);
-        $container->setParameter('ekreative_health_check.optional_redis', $config['optional_redis']);
+        $args = [];
+        if ($config['doctrine_enabled']) {
+            $args[] = new Reference('doctrine', \Symfony\Component\DependencyInjection\ContainerInterface::NULL_ON_INVALID_REFERENCE);
+        } else {
+            $args[] = null;
+        }
+
+        $args[] = $config['doctrine'];
+        $args[] = $config['optional_doctrine'];
+
+        $args[] = array_map(function ($service) {
+            return new Reference($service);
+        }, $config['redis']);
+
+        $args[] = array_map(function ($service) {
+            return new Reference($service);
+        }, $config['optional_redis']);
+
+        $def = new Definition(HealthCheckController::class, $args);
+        $def->addTag('controller.service_arguments');
+
+        $container->addDefinitions([HealthCheckController::class => $def]);
     }
 }

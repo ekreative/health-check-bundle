@@ -1,20 +1,37 @@
-sudo: false
 language: php
-php:
-    - 5.5
-    - 5.6
-    - 7.0
-    - 7.1
+
+sudo: false
 
 services:
-    - mysql
-    - redis
+  - mysql
+  - redis
+
+matrix:
+  include:
+    - php: 5.5
+      env: SYMFONY_VERSION='~3.3.0'
+    - php: 5.6
+      env: SYMFONY_VERSION='~3.3.0'
+    - php: 7.0
+      env: SYMFONY_VERSION='~3.3.0'
+    - php: 7.0
+      env: SYMFONY_VERSION='~3.4.0'
+    - php: 7.1
+      env: SYMFONY_VERSION='~3.3.0'
+    - php: 7.1
+      env: SYMFONY_VERSION='~3.4.0'
+    - php: 7.2
+      env: SYMFONY_VERSION='~3.4.0'
+    - php: 7.2
+      env: SYMFONY_VERSION='~4.0.0'
+
+  fast_finish: true
 
 before_script:
-    - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - composer selfupdate
-    - composer install
+  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update "symfony/framework-bundle:${SYMFONY_VERSION}"; fi;
+  - composer update
 
 script:
-    - ./vendor/bin/php-cs-fixer fix --dry-run --diff
-    - ./vendor/bin/phpunit
+  - ./vendor/bin/php-cs-fixer fix --dry-run --diff
+  - ./vendor/bin/phpunit
