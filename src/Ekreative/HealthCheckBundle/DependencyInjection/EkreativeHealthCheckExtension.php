@@ -14,6 +14,8 @@ class EkreativeHealthCheckExtension extends Extension
 
         $container->setParameter('ekreative_health_check.doctrine_enabled', $config['doctrine_enabled']);
         $container->setParameter('ekreative_health_check.doctrine', $config['doctrine']);
+        $container->setParameter('ekreative_health_check.optional_doctrine', $config['optional_doctrine']);
         $container->setParameter('ekreative_health_check.redis', $config['redis']);
+        $container->setParameter('ekreative_health_check.optional_redis', $config['optional_redis']);
     }
 }

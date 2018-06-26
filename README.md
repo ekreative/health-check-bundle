@@ -29,7 +29,7 @@ public function registerBundles()
 ### Routing
 
 ```yaml
-ekreatve_health_check:
+ekreative_health_check:
     resource: "@EkreativeHealthCheckBundle/Controller/"
     type:     annotation
     prefix:   /
@@ -49,6 +49,14 @@ ekreative_health_check:
     doctrine:
         - 'default'
         - 'alternative'
+```
+
+You can also list doctrine connections that should be checked, but don't cause a failure
+
+```yaml
+ekreative_health_check:
+    optional_doctrine:
+        - 'another.optional'
 ```
 
 Its possible to disable the doctrine check
@@ -87,16 +95,24 @@ ekreative_health_check:
         - 'redis'
 ```
 
+You can also list redis connections that should be checked, but don't cause a failure
+
+```yaml
+ekreative_health_check:
+    optional_redis:
+        - 'redis.optional'
+```
+
 #### Timeout
 
 Its recommended to change the default Redis connection timeout so that your health
 check will fail faster
 
-Add this to `connect` call for `\Redis`
+Its the third argument to `connect` call for `\Redis`
 
 ```yaml
 services:
-    kidslox.redis:
+    redis:
         class: Redis
         calls:
             - [ connect, ['%redis_host%', '%redis_port%', 5]]
