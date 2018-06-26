@@ -1,0 +1,26 @@
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    router:
+        resource: "%kernel.root_dir%/routing.yml"
+        strict_requirements: ~
+    secret: 'fake_secret'
+
+monolog:
+    handlers:
+        main:
+            type: console
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_mysql
+                host: 'example.com'
+                options:
+                    !php/const:PDO::ATTR_TIMEOUT: 1
+
+ekreative_health_check:
+    optional_doctrine:
+        - 'default'
