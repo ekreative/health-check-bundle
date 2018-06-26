@@ -81,7 +81,7 @@ doctrine:
                 driver: pdo_mysql
                 host: '%database_host%'
                 options:
-                    !php/const:PDO::ATTR_TIMEOUT: 5
+                    !php/const PDO::ATTR_TIMEOUT: 5
 ```
 
 ### Redis

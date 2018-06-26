@@ -17,7 +17,7 @@ doctrine:
                 driver: pdo_mysql
                 host: 'example.com'
                 options:
-                    !php/const:PDO::ATTR_TIMEOUT: 1
+                    !php/const PDO::ATTR_TIMEOUT: 1
 
 ekreative_health_check:
     optional_doctrine:
