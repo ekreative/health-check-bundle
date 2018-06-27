@@ -81,7 +81,7 @@ doctrine:
                 driver: pdo_mysql
                 host: '%database_host%'
                 options:
-                    !php/const:PDO::ATTR_TIMEOUT: 5
+                    !php/const PDO::ATTR_TIMEOUT: 5
 ```
 
 ### Redis
@@ -106,9 +106,7 @@ ekreative_health_check:
 #### Timeout
 
 Its recommended to change the default Redis connection timeout so that your health
-check will fail faster
-
-Its the third argument to `connect` call for `\Redis`
+check will fail faster. Its the third argument to `connect` call for `\Redis`.
 
 ```yaml
 services:
@@ -116,4 +114,19 @@ services:
         class: Redis
         calls:
             - [ connect, ['%redis_host%', '%redis_port%', 5]]
+```
+
+#### Redis
+
+When you want redis to be optional, you might want to use the provided `RedisFactory`
+(or your own) that catches any exceptions on connect. Without this a Redis failure will
+cause the container to fail, resulting in a 500 error. 
+
+```yaml
+services:
+    redis:
+        class: Redis
+        factory: Ekreative\HealthCheckBundle\DependencyInjection\RedisFactory::get
+        arguments:
+            $host: 'example.com'
 ```
