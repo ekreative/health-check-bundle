@@ -3,10 +3,9 @@
 namespace Ekreative\HealthCheckBundle\Controller;
 
 use Doctrine\DBAL\Connection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HealthCheckController
 {
@@ -45,8 +44,7 @@ class HealthCheckController
     }
 
     /**
-     * @Route("/healthcheck", name="health-check")
-     * @Method({"GET"})
+     * @Route("/healthcheck", name="health-check", methods={"GET"})
      */
     public function healthCheckAction()
     {

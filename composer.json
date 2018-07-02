@@ -19,8 +19,7 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "sensio/framework-extra-bundle": "^3.0|^4.0|^5.0",
-        "symfony/framework-bundle": "^3.0|^4.0"
+        "symfony/framework-bundle": "^3.4|^4.0"
     },
     "require-dev": {
         "ext-redis": "*",
