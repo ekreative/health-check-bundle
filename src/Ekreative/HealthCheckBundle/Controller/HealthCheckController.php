@@ -139,9 +139,7 @@ class HealthCheckController
             $redis->ping();
 
             return true;
-        } catch (\RedisException $e) {
-            return false;
-        } catch (\ErrorException $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
