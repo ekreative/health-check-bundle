@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Remove dependency on framework-extra-bundle
+
 ## 1.2.1
 
 - Catch all Redis errors
