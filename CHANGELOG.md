@@ -1,3 +1,9 @@
+# Changelog
+
+## 1.4.0
+
+- Symfony 4.1 deprecations
+
 ## 1.3.0
 
 - Remove dependency on framework-extra-bundle
