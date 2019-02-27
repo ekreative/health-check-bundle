@@ -9,8 +9,14 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ekreative_health_check');
+        $treeBuilder = new TreeBuilder('ekreative_health_check');
+
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('ekreative_health_check');
+        }
 
         $rootNode->children()
             ->arrayNode('redis')

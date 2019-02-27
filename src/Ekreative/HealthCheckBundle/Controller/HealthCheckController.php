@@ -34,7 +34,7 @@ class HealthCheckController
      */
     private $optionalRedis;
 
-    public function __construct(ManagerRegistry $doctrine = null, array $connections, $optionalConnections, array $redis, array $optionalRedis)
+    public function __construct(?ManagerRegistry $doctrine, array $connections, $optionalConnections, array $redis, array $optionalRedis)
     {
         $this->doctrine = $doctrine;
         $this->connections = $connections;

@@ -15,7 +15,7 @@ doctrine:
         connections:
             default:
                 driver: pdo_sqlite
-                path: '%kernel.root_dir%/cache/db.sqlite'
+                path: '%kernel.cache_dir%/db.sqlite'
 
 ekreative_health_check:
     optional_redis:
