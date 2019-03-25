@@ -35,6 +35,18 @@ ekreative_health_check:
     prefix:   /
 ```
 
+### Security
+
+You should make sure `/healthcheck` does not require authentication
+
+```yaml
+security:
+    firewalls:
+        healthcheck:
+            pattern: ^/healthcheck
+            security: false
+```
+
 ## Configuration
 
 By default healthcheck will check that your default doctrine connection is working.
