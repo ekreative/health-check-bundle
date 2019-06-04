@@ -142,3 +142,16 @@ services:
         arguments:
             $host: 'example.com'
 ```
+#### RabbitMQ
+
+Example:
+
+```yaml
+ekreative_health_check:
+    rabbitmq:
+        host:     '%(rabbitmq_host)%'
+        port:     '%(rabbitmq_port)%'
+        user:     '%(rabbitmq_user)%'
+        password: '%(rabbitmq_password)%'
+        vhost:    '%(rabbitmq_vhost)%'
+```
