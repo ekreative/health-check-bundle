@@ -35,13 +35,9 @@ class EkreativeHealthCheckExtension extends Extension
         }, $config['optional_redis']);
 
         
-        if($config['rabbitmq']){
+        if(isset($config['rabbitmq'])){
             $args[] = $config['rabbitmq'];
         }
-        // var_dump($args);die();
-        // $args[] = array_map(function ($service) {
-        //     return new Reference($service);
-        // }, $config['rabbitmq']);
         
         $def = new Definition(HealthCheckController::class, $args);
         $def->addTag('controller.service_arguments');

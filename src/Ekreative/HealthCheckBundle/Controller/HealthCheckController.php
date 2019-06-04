@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use GuzzleHttp\Client;
 
 class HealthCheckController
 {
@@ -41,7 +42,7 @@ class HealthCheckController
 
     public function __construct(ManagerRegistry $doctrine, array $connections, 
     $optionalConnections, array $redis, array $optionalRedis
-    ,array $rabbitmq
+    ,array $rabbitmq = null
     )
     {
 // var_dump('const');die();
@@ -119,7 +120,7 @@ class HealthCheckController
 
         if($this->rabbitmq){
             $check = $this->checkRabbitmqConnection($this->rabbitmq);
-            var_dump($check);die();
+            $data['rabbitmq'] = $check;
         }
 
         $ok = array_reduce($required, function ($m, $v) {
@@ -158,17 +159,25 @@ class HealthCheckController
         }
     
         /**
-         * @param $rabbitmq
+         * @param array $rabbitmq
          *
          * @return bool
          */
         private function checkRabbitmqConnection($rabbitmq)
         {
             try {
-                var_dump('checkl');die();
+                $client = new Client();
                 
+                $url = $rabbitmq['host'] .':'.$rabbitmq['port']. '/api/healthchecks/node';
+                
+                $response = $client->request('GET',$url, 
+                    ['auth' => [$rabbitmq['user'], $rabbitmq['password']]]);
 
-                return true;
+                if($response->getStatusCode() == 200){
+                    return true;
+                }else{
+                    return false;
+                }
             } catch (\Exception $e) {
                 return false;
             }

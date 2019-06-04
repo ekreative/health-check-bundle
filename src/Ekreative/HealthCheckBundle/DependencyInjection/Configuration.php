@@ -24,7 +24,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('optional_redis')
                 ->prototype('scalar')->end()
             ->end()
-            
             ->arrayNode('rabbitmq')
                 ->children()
                     ->scalarNode('host')->end()
@@ -32,11 +31,8 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('user')->end()
                     ->scalarNode('password')->end()
                     ->scalarNode('vhost')->end()
-                    ->scalarNode('service')->end()
-                // ->prototype('scalar')->end()
+                ->end()
             ->end()
-            ->end()
-
             ->arrayNode('doctrine')
                 ->prototype('scalar')->end()
             ->end()
