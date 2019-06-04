@@ -33,14 +33,25 @@ class HealthCheckController
      * @var \Redis[]
      */
     private $optionalRedis;
+    
+    /**
+     * 
+     */
+    private $rabbitmq;
 
-    public function __construct(?ManagerRegistry $doctrine, array $connections, $optionalConnections, array $redis, array $optionalRedis)
+    public function __construct(ManagerRegistry $doctrine, array $connections, 
+    $optionalConnections, array $redis, array $optionalRedis
+    ,array $rabbitmq
+    )
     {
+// var_dump('const');die();
+
         $this->doctrine = $doctrine;
         $this->connections = $connections;
         $this->optionalConnections = $optionalConnections;
         $this->redis = $redis;
         $this->optionalRedis = $optionalRedis;
+        $this->rabbitmq = $rabbitmq;
     }
 
     /**
@@ -55,7 +66,6 @@ class HealthCheckController
         $required = [
             'app' => true,
         ];
-
         if ($this->doctrine) {
             $i = 0;
             $key = 'database';
@@ -107,6 +117,11 @@ class HealthCheckController
 
         restore_error_handler();
 
+        if($this->rabbitmq){
+            $check = $this->checkRabbitmqConnection($this->rabbitmq);
+            var_dump($check);die();
+        }
+
         $ok = array_reduce($required, function ($m, $v) {
             return $m && $v;
         }, true);
@@ -125,20 +140,37 @@ class HealthCheckController
             return false;
         }
     }
-
-    /**
-     * @param \Redis $redis
-     *
-     * @return bool
-     */
-    private function checkRedisConnection($redis)
-    {
-        try {
-            $redis->ping();
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
+    
+        /**
+         * @param \Redis $redis
+         *
+         * @return bool
+         */
+        private function checkRedisConnection($redis)
+        {
+            try {
+                $redis->ping();
+    
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
         }
-    }
+    
+        /**
+         * @param $rabbitmq
+         *
+         * @return bool
+         */
+        private function checkRabbitmqConnection($rabbitmq)
+        {
+            try {
+                var_dump('checkl');die();
+                
+
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
 }
