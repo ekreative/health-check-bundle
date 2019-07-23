@@ -34,13 +34,22 @@ class HealthCheckController
      */
     private $optionalRedis;
 
-    public function __construct(?ManagerRegistry $doctrine, array $connections, $optionalConnections, array $redis, array $optionalRedis)
-    {
+    public function __construct(
+      ?ManagerRegistry $doctrine,
+      array $connections,
+      array $optionalConnections,
+      array $redis,
+      array $optionalRedis,
+      bool  $shortResponseFormat,
+      string $dateFormat
+    ) {
         $this->doctrine = $doctrine;
         $this->connections = $connections;
         $this->optionalConnections = $optionalConnections;
         $this->redis = $redis;
         $this->optionalRedis = $optionalRedis;
+        $this->shortResponseFormat = $shortResponseFormat;
+        $this->dateFormat = $dateFormat;
     }
 
     /**
@@ -68,13 +77,13 @@ class HealthCheckController
                 ++$i;
                 $key = "database$i";
             }
-
-            foreach ($this->optionalConnections as $name) {
-                $data[$key] = $this->checkDoctrineConnection($this->doctrine->getConnection($name));
-                ++$i;
-                $key = "database$i";
+            if (!$this->shortResponseFormat) {
+                foreach ($this->optionalConnections as $name) {
+                    $data[$key] = $this->checkDoctrineConnection($this->doctrine->getConnection($name));
+                    ++$i;
+                    $key = "database$i";
+                }
             }
-
             if (!count($this->connections) && !count($this->optionalConnections)) {
                 $data[$key] = $required[$key] = $this->checkDoctrineConnection($this->doctrine->getConnection());
             }
@@ -99,19 +108,34 @@ class HealthCheckController
             ++$i;
             $key = "redis$i";
         }
-        foreach ($this->optionalRedis as $redis) {
-            $data[$key] = $this->checkRedisConnection($redis);
-            ++$i;
-            $key = "redis$i";
-        }
 
+        if (!$this->shortResponseFormat) {
+            foreach ($this->optionalRedis as $redis) {
+                $data[$key] = $this->checkRedisConnection($redis);
+                ++$i;
+                $key = "redis$i";
+            }
+        }
         restore_error_handler();
 
         $ok = array_reduce($required, function ($m, $v) {
             return $m && $v;
         }, true);
 
+
+        if ($this->shortResponseFormat) {
+          return $this->getShortResponse($ok);
+        }
         return new JsonResponse($data, $ok ? 200 : 503);
+    }
+
+    private function getShortResponse(bool $isHealthy) {
+      $data = [
+        'status' => $isHealthy,
+        'timestamp' => date($this->dateFormat)
+      ];
+
+      return new JsonResponse($data, $isHealthy ? 200 : 503);
     }
 
     /**

@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EkreativeHealthCheckExtension extends Extension
 {
@@ -17,7 +18,7 @@ class EkreativeHealthCheckExtension extends Extension
 
         $args = [];
         if ($config['doctrine_enabled']) {
-            $args[] = new Reference('doctrine', \Symfony\Component\DependencyInjection\ContainerInterface::NULL_ON_INVALID_REFERENCE);
+            $args[] = new Reference('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE);
         } else {
             $args[] = null;
         }
@@ -32,6 +33,8 @@ class EkreativeHealthCheckExtension extends Extension
         $args[] = array_map(function ($service) {
             return new Reference($service);
         }, $config['optional_redis']);
+        $args[] = $config['short_response_format'];
+        $args[] = $config['date_format'];
 
         $def = new Definition(HealthCheckController::class, $args);
         $def->addTag('controller.service_arguments');

@@ -34,6 +34,12 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('doctrine_enabled')
                 ->defaultTrue()
             ->end()
+            ->booleanNode('short_response_format')
+                ->defaultFalse()
+            ->end()
+            ->scalarNode('date_format')
+                ->defaultValue('Y-m-d H:i:s T')
+            ->end()
         ->end();
 
         return $treeBuilder;
