@@ -30,9 +30,7 @@ public function registerBundles()
 
 ```yaml
 ekreative_health_check:
-    resource: "@EkreativeHealthCheckBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: '@EkreativeHealthCheckBundle/Resources/config/routes.xml'
 ```
 
 ### Security

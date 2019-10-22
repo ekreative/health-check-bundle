@@ -2,3 +2,4 @@
 /tests/logs/*
 /vendor/
 /.php_cs.cache
+/var/

@@ -126,4 +126,22 @@ class HealthCheckControllerTest extends WebTestCase
     {
         throw new \Exception('Should not be called');
     }
+
+    public function testAnnoRoutes()
+    {
+        // This env uses a sqlite connection and fakes the redis server
+        $client = static::createClient(['environment' => 'test_anno']);
+
+        $redis = $this->getMockBuilder(\Redis::class)
+            ->setMethods(['ping'])
+            ->getMock();
+        $redis->method('ping')->willReturn(true);
+
+        $client->getKernel()->getContainer()->set('redis', $redis);
+
+        $client->request('GET', '/healthcheck');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json', $client->getResponse()->headers->get('content-type'));
+    }
 }

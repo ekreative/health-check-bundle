@@ -1,0 +1,27 @@
+framework:
+    test: ~
+    router:
+        resource: "%kernel.root_dir%/routing_anno.yml"
+        strict_requirements: ~
+    secret: 'fake_secret'
+
+monolog:
+    handlers:
+        main:
+            type: console
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_sqlite
+                path: '%kernel.cache_dir%/db.sqlite'
+
+ekreative_health_check:
+    redis:
+        - 'redis'
+
+services:
+    redis:
+        class: Redis
+        public: true

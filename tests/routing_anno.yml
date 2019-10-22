@@ -1,0 +1,4 @@
+ekreative_health_check:
+    resource: "@EkreativeHealthCheckBundle/Controller/"
+    type:     annotation
+    prefix:   /
