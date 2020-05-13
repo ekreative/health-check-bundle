@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+- Fix travis tests
+
 ## 1.6.0
 
 - Enable Symfony 5
