@@ -1,23 +1,27 @@
 language: php
-
-sudo: false
+dist: bionic
+os: linux
 
 services:
   - mysql
   - redis
 
-matrix:
+jobs:
   include:
-    - php: 7.1
-      env: SYMFONY_VERSION='^3.4'
     - php: 7.2
       env: SYMFONY_VERSION='^3.4'
-    - php: 7.2
-      env: SYMFONY_VERSION='^4.2'
     - php: 7.3
       env: SYMFONY_VERSION='^3.4'
+    - php: 7.2
+      env: SYMFONY_VERSION='^4.4'
     - php: 7.3
-      env: SYMFONY_VERSION='^4.2'
+      env: SYMFONY_VERSION='^4.4'
+    - php: 7.4
+      env: SYMFONY_VERSION='^4.4'
+    - php: 7.3
+      env: SYMFONY_VERSION='^5.0'
+    - php: 7.4
+      env: SYMFONY_VERSION='^5.0'
   fast_finish: true
 
 before_script:

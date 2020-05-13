@@ -30,16 +30,16 @@ class HealthCheckControllerTest extends WebTestCase
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertCount(3, $data);
 
-        $this->assertInternalType('bool', $data['app']);
+        $this->assertIsBool($data['app']);
         $this->assertTrue($data['app']);
 
-        $this->assertInternalType('bool', $data['database']);
+        $this->assertIsBool($data['database']);
         $this->assertTrue($data['app']);
 
-        $this->assertInternalType('bool', $data['redis']);
+        $this->assertIsBool($data['redis']);
         $this->assertTrue($data['app']);
     }
 
@@ -54,10 +54,10 @@ class HealthCheckControllerTest extends WebTestCase
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertCount(2, $data);
 
-        $this->assertInternalType('bool', $data['database']);
+        $this->assertIsBool($data['database']);
         $this->assertFalse($data['database']);
     }
 
@@ -72,10 +72,10 @@ class HealthCheckControllerTest extends WebTestCase
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertCount(2, $data);
 
-        $this->assertInternalType('bool', $data['database']);
+        $this->assertIsBool($data['database']);
         $this->assertFalse($data['database']);
     }
 
@@ -90,10 +90,10 @@ class HealthCheckControllerTest extends WebTestCase
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertCount(3, $data);
 
-        $this->assertInternalType('bool', $data['redis']);
+        $this->assertIsBool($data['redis']);
         $this->assertFalse($data['redis']);
     }
 
@@ -108,10 +108,10 @@ class HealthCheckControllerTest extends WebTestCase
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertCount(3, $data);
 
-        $this->assertInternalType('bool', $data['redis']);
+        $this->assertIsBool($data['redis']);
         $this->assertFalse($data['redis']);
     }
 

@@ -1,7 +1,7 @@
 framework:
     test: ~
     router:
-        resource: "%kernel.root_dir%/routing.yml"
+        resource: "%kernel.project_dir%/tests/routing.yml"
         strict_requirements: ~
     secret: 'fake_secret'
 
