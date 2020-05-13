@@ -8,12 +8,8 @@ services:
 
 jobs:
   include:
-    - php: 7.2
-      env: SYMFONY_VERSION='^3.4'
     - php: 7.3
       env: SYMFONY_VERSION='^3.4'
-    - php: 7.2
-      env: SYMFONY_VERSION='^4.4'
     - php: 7.3
       env: SYMFONY_VERSION='^4.4'
     - php: 7.4
