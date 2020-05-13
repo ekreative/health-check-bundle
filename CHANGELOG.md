@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0
+
+- Enable Symfony 5
+
 ## 1.5.0
 
 - Change to XML routes file.
