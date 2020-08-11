@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.0
+
+- Fix default redis port
+  
+  This is potentially breaking change, but given its very unlikely someone is
+  using this wrong default port, I'm going to make it a minor fix.
+
 ## 1.6.1
 
 - Fix travis tests

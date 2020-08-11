@@ -3,6 +3,7 @@ framework:
     router:
         resource: "%kernel.project_dir%/tests/routing_anno.yml"
         strict_requirements: ~
+        utf8: true
     secret: 'fake_secret'
 
 monolog:
