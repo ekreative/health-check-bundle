@@ -12,7 +12,7 @@ class RedisFactory
      *
      * @return \Redis
      */
-    public static function get($host, $port = 6739, $timeout = 5, $prefix = null)
+    public static function get($host, $port = 6379, $timeout = 5, $prefix = null)
     {
         set_error_handler(function ($severity, $message, $file, $line) {
             if ($severity & error_reporting()) {
