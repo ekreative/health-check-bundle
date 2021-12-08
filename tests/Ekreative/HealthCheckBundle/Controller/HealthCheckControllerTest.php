@@ -133,7 +133,7 @@ class HealthCheckControllerTest extends WebTestCase
         $client = static::createClient(['environment' => 'test_anno']);
 
         $redis = $this->getMockBuilder(\Redis::class)
-            ->setMethods(['ping'])
+            ->onlyMethods(['ping'])
             ->getMock();
         $redis->method('ping')->willReturn(true);
 
