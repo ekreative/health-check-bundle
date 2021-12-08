@@ -120,7 +120,7 @@ class HealthCheckController
     private function checkDoctrineConnection(Connection $connection)
     {
         try {
-            return $connection->ping();
+            return (bool) $connection->executeQuery('SELECT 1');
         } catch (\Exception $e) {
             return false;
         }
