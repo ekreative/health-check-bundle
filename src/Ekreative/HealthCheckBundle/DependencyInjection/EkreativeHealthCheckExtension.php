@@ -4,6 +4,7 @@ namespace Ekreative\HealthCheckBundle\DependencyInjection;
 
 use Ekreative\HealthCheckBundle\Controller\HealthCheckController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -17,7 +18,7 @@ class EkreativeHealthCheckExtension extends Extension
 
         $args = [];
         if ($config['doctrine_enabled']) {
-            $args[] = new Reference('doctrine', \Symfony\Component\DependencyInjection\ContainerInterface::NULL_ON_INVALID_REFERENCE);
+            $args[] = new Reference('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE);
         } else {
             $args[] = null;
         }
