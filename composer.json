@@ -18,7 +18,7 @@
         ]
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=7.3",
         "ext-redis": "*",
         "symfony/framework-bundle": "^4.0|^5.0|^6.0",
         "sensio/framework-extra-bundle": "^4.0|^5.0|^6.0"
@@ -27,7 +27,7 @@
         "symfony/phpunit-bridge": "^4.0|^5.0|^6.0",
         "doctrine/doctrine-bundle": "^2",
         "phpunit/phpunit": "^9",
-        "friendsofphp/php-cs-fixer": "^3.0",
+        "friendsofphp/php-cs-fixer": "^2.0|^3.0",
         "symfony/monolog-bundle": "^3.0|^4.0",
         "symfony/browser-kit": "^4.0|^5.0|^6.0",
         "symfony/yaml": "^4.0|^5.0|^6.0"
@@ -37,5 +37,10 @@
             "name": "Fred Cox",
             "email": "mcfedr@gmail.com"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
+    }
 }

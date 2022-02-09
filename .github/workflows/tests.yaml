@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+
+jobs:
+  tests:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - php: '7.3'
+            symfony: '4.4'
+          - php: '7.4'
+            symfony: '4.4'
+          - php: '7.3'
+            symfony: '5.4'
+          - php: '7.4'
+            symfony: '5.4'
+          - php: '8.0'
+            symfony: '5.4'
+          - php: '8.0'
+            symfony: '6.0'
+    name: PHP ${{ matrix.version.php }} Symfony ${{ matrix.version.symfony }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.version.php }}
+          tools: phpunit-bridge, flex
+          extensions: pdo_sqlite, redis
+          coverage: none
+      - run: |
+          composer config extra.symfony.require ${{ matrix.version.symfony }}
+          composer update
+      - run: vendor/bin/php-cs-fixer fix --dry-run --diff
+      - run: vendor/bin/phpunit
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: 'disabled=1'
