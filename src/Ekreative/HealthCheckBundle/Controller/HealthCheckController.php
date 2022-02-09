@@ -5,6 +5,7 @@ namespace Ekreative\HealthCheckBundle\Controller;
 use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HealthCheckController
@@ -34,7 +35,7 @@ class HealthCheckController
      */
     private $optionalRedis;
 
-    public function __construct(?ManagerRegistry $doctrine, array $connections, $optionalConnections, array $redis, array $optionalRedis)
+    public function __construct(?ManagerRegistry $doctrine, array $connections, array $optionalConnections, array $redis, array $optionalRedis)
     {
         $this->doctrine = $doctrine;
         $this->connections = $connections;
@@ -46,7 +47,7 @@ class HealthCheckController
     /**
      * @Route("/healthcheck", name="health-check", methods={"GET"})
      */
-    public function healthCheckAction()
+    public function healthCheckAction(): Response
     {
         $data = [
             'app' => true,
@@ -60,19 +61,19 @@ class HealthCheckController
             $i = 0;
             $key = 'database';
             if ((count($this->connections) + count($this->optionalConnections)) > 1) {
-                $key .= "$i";
+                $key .= "{$i}";
             }
 
             foreach ($this->connections as $name) {
                 $data[$key] = $required[$key] = $this->checkDoctrineConnection($this->doctrine->getConnection($name));
                 ++$i;
-                $key = "database$i";
+                $key = "database{$i}";
             }
 
             foreach ($this->optionalConnections as $name) {
                 $data[$key] = $this->checkDoctrineConnection($this->doctrine->getConnection($name));
                 ++$i;
-                $key = "database$i";
+                $key = "database{$i}";
             }
 
             if (!count($this->connections) && !count($this->optionalConnections)) {
@@ -92,17 +93,17 @@ class HealthCheckController
         $i = 0;
         $key = 'redis';
         if ((count($this->redis) + count($this->optionalRedis)) > 1) {
-            $key .= "$i";
+            $key .= "{$i}";
         }
         foreach ($this->redis as $redis) {
             $data[$key] = $required[$key] = $this->checkRedisConnection($redis);
             ++$i;
-            $key = "redis$i";
+            $key = "redis{$i}";
         }
         foreach ($this->optionalRedis as $redis) {
             $data[$key] = $this->checkRedisConnection($redis);
             ++$i;
-            $key = "redis$i";
+            $key = "redis{$i}";
         }
 
         restore_error_handler();
@@ -114,10 +115,7 @@ class HealthCheckController
         return new JsonResponse($data, $ok ? 200 : 503);
     }
 
-    /**
-     * @return bool
-     */
-    private function checkDoctrineConnection(Connection $connection)
+    private function checkDoctrineConnection(Connection $connection): bool
     {
         try {
             return (bool) $connection->executeQuery('SELECT 1');
@@ -126,12 +124,7 @@ class HealthCheckController
         }
     }
 
-    /**
-     * @param \Redis $redis
-     *
-     * @return bool
-     */
-    private function checkRedisConnection($redis)
+    private function checkRedisConnection(\Redis $redis): bool
     {
         try {
             $redis->ping();

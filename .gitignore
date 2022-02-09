@@ -4,3 +4,4 @@
 /tests/logs/*
 /vendor/
 /var/
+/.php-cs-fixer.cache

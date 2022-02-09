@@ -4,6 +4,10 @@ namespace Ekreative\HealthCheckBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class HealthCheckControllerTest extends WebTestCase
 {
     public function testAction()
@@ -16,8 +20,9 @@ class HealthCheckControllerTest extends WebTestCase
             $client = static::createClient();
 
             $redis = $this->getMockBuilder(\Redis::class)
-                ->setMethods(['ping'])
-                ->getMock();
+                ->onlyMethods(['ping'])
+                ->getMock()
+            ;
             $redis->method('ping')->willReturn(true);
 
             $client->getKernel()->getContainer()->set('redis', $redis);
@@ -134,7 +139,8 @@ class HealthCheckControllerTest extends WebTestCase
 
         $redis = $this->getMockBuilder(\Redis::class)
             ->onlyMethods(['ping'])
-            ->getMock();
+            ->getMock()
+        ;
         $redis->method('ping')->willReturn(true);
 
         $client->getKernel()->getContainer()->set('redis', $redis);

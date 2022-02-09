@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('ekreative_health_check');
 
@@ -20,21 +20,22 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('redis')
-                ->prototype('scalar')->end()
+            ->prototype('scalar')->end()
             ->end()
             ->arrayNode('optional_redis')
-                ->prototype('scalar')->end()
+            ->prototype('scalar')->end()
             ->end()
             ->arrayNode('doctrine')
-                ->prototype('scalar')->end()
+            ->prototype('scalar')->end()
             ->end()
             ->arrayNode('optional_doctrine')
-                ->prototype('scalar')->end()
+            ->prototype('scalar')->end()
             ->end()
             ->booleanNode('doctrine_enabled')
-                ->defaultTrue()
+            ->defaultTrue()
             ->end()
-        ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }
