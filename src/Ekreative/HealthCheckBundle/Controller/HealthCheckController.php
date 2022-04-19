@@ -4,6 +4,7 @@ namespace Ekreative\HealthCheckBundle\Controller;
 
 use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Cache\Traits\RedisProxy;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -124,7 +125,7 @@ class HealthCheckController
         }
     }
 
-    private function checkRedisConnection(\Redis $redis): bool
+    private function checkRedisConnection(\Redis|\RedisArray|RedisProxy|\Predis\ClientInterface $redis): bool
     {
         try {
             $redis->ping();
