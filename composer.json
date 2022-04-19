@@ -18,7 +18,7 @@
         ]
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-redis": "*",
         "symfony/framework-bundle": "^4.0|^5.0|^6.0",
         "sensio/framework-extra-bundle": "^4.0|^5.0|^6.0"
