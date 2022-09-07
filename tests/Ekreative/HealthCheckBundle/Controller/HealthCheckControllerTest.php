@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class HealthCheckControllerTest extends WebTestCase
