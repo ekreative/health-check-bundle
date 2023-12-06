@@ -45,9 +45,7 @@ class HealthCheckController
         $this->optionalRedis = $optionalRedis;
     }
 
-    /**
-     * @Route("/healthcheck", name="health-check", methods={"GET"})
-     */
+    #[Route(path: '/healthcheck', name: 'health-check', methods: ['GET'])]
     public function healthCheckAction(): Response
     {
         $data = [

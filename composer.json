@@ -20,8 +20,7 @@
     "require": {
         "php": ">=8.0",
         "ext-redis": "*",
-        "symfony/framework-bundle": "^5.0|^6.0",
-        "sensio/framework-extra-bundle": "^5.0|^6.0"
+        "symfony/framework-bundle": "^5.0|^6.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0|^6.0",
