@@ -5,6 +5,10 @@ framework:
         strict_requirements: ~
         utf8: true
     secret: 'fake_secret'
+    http_method_override: true
+    handle_all_throwables: false
+    php_errors:
+        log: true
 
 monolog:
     handlers:
