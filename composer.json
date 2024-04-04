@@ -20,16 +20,16 @@
     "require": {
         "php": ">=8.0",
         "ext-redis": "*",
-        "symfony/framework-bundle": "^5.0|^6.0"
+        "symfony/framework-bundle": "^5.0|^6.0|^7.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.0|^6.0",
+        "symfony/phpunit-bridge": "^5.0|^6.0|^7.0",
         "doctrine/doctrine-bundle": "^2",
         "phpunit/phpunit": "^9",
         "friendsofphp/php-cs-fixer": "^3.0",
         "symfony/monolog-bundle": "^3.0|^4.0",
-        "symfony/browser-kit": "^5.0|^6.0",
-        "symfony/yaml": "^5.0|^6.0"
+        "symfony/browser-kit": "^5.0|^6.0|^7.0",
+        "symfony/yaml": "^5.0|^6.0|^7.0"
     },
     "authors": [
         {
