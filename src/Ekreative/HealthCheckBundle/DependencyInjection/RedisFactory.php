@@ -7,7 +7,7 @@ class RedisFactory
     /**
      * @throws \ErrorException
      */
-    public static function get(string $host, int $port = 6379, int $timeout = 5, string $prefix = null): \Redis
+    public static function get(string $host, int $port = 6379, int $timeout = 5, ?string $prefix = null): \Redis
     {
         set_error_handler(function ($severity, $message, $file, $line) {
             if ($severity & error_reporting()) {

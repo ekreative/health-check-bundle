@@ -2,13 +2,14 @@
 
 namespace Ekreative\HealthCheckBundle\Controller;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class HealthCheckControllerTest extends WebTestCase
 {
     public function testAction()
@@ -43,10 +44,10 @@ class HealthCheckControllerTest extends WebTestCase
         $this->assertTrue($data['app']);
 
         $this->assertIsBool($data['database']);
-        $this->assertTrue($data['app']);
+        $this->assertTrue($data['database']);
 
         $this->assertIsBool($data['redis']);
-        $this->assertTrue($data['app']);
+        $this->assertTrue($data['redis']);
     }
 
     public function testMySQLFailAction()
@@ -133,6 +134,7 @@ class HealthCheckControllerTest extends WebTestCase
         throw new \Exception('Should not be called');
     }
 
+    #[Group('not-5.4')]
     public function testAnnoRoutes()
     {
         // This env uses a sqlite connection and fakes the redis server
