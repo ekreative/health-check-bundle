@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.12.0
+
+- Support for Symfony 7
+
+# 1.11.0
+
+- Using annotations for routes
+
+# 1.10.0
+
+- Allow different Redis classes to be used
+
+# 1.9.0
+
+- Support for Symfony 6
+
+# 1.8.0
+
+- Dependency updates
+
 ## 1.7.0
 
 - Fix default redis port
