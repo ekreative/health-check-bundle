@@ -5,18 +5,20 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         version:
-          - php: '8.0'
+          - php: '8.3'
             symfony: '5.4'
-          - php: '8.0'
-            symfony: '6.0'
+          - php: '8.3'
+            symfony: '6.4'
+          - php: '8.3'
+            symfony: '7.0'
     name: PHP ${{ matrix.version.php }} Symfony ${{ matrix.version.symfony }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.version.php }}
@@ -27,6 +29,6 @@ jobs:
           composer config extra.symfony.require ${{ matrix.version.symfony }}
           composer update
       - run: vendor/bin/php-cs-fixer fix --dry-run --diff
-      - run: vendor/bin/phpunit
+      - run: vendor/bin/phpunit --exclude-group not-${{ matrix.version.symfony }}
         env:
           SYMFONY_DEPRECATIONS_HELPER: 'disabled=1'
