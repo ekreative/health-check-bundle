@@ -20,12 +20,3 @@ doctrine:
             default:
                 driver: pdo_sqlite
                 path: '%kernel.cache_dir%/db.sqlite'
-
-ekreative_health_check:
-    redis:
-        - 'redis'
-
-services:
-    redis:
-        class: Redis
-        public: true
