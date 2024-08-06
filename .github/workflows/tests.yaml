@@ -2,6 +2,7 @@ name: Tests
 
 on:
   push:
+  pr:
 
 jobs:
   tests:
