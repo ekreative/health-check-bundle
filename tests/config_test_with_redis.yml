@@ -5,6 +5,9 @@ framework:
         strict_requirements: ~
         utf8: true
     secret: 'fake_secret'
+    http_method_override: true
+    php_errors:
+        log: true
 
 monolog:
     handlers:
@@ -25,6 +28,7 @@ ekreative_health_check:
 services:
     redis:
         class: Redis
+        public: true
         factory: Ekreative\HealthCheckBundle\DependencyInjection\RedisFactory::get
         arguments:
             $host: 'example.com'

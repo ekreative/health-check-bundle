@@ -19,8 +19,10 @@
     },
     "require": {
         "php": ">=8.0",
-        "ext-redis": "*",
         "symfony/framework-bundle": "^5.0|^6.0|^7.0"
+    },
+    "suggest": {
+        "ext-redis": "To use the Redis health check"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0|^6.0|^7.0",

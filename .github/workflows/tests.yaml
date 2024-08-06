@@ -10,26 +10,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - php: '8.3'
-            symfony: '5.4'
-          - php: '8.3'
-            symfony: '6.4'
-          - php: '8.3'
-            symfony: '7.0'
-    name: PHP ${{ matrix.version.php }} Symfony ${{ matrix.version.symfony }}
+        php: ["8.3"]
+        symfony: ["5.4", "6.4", "7.0"]
+        enable-redis: [true, false]
+    name: PHP ${{ matrix.php }} Symfony ${{ matrix.symfony }} Redis ${{ matrix.enable-redis && 'enabled' || 'disabled' }}
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.version.php }}
+          php-version: ${{ matrix.php }}
           tools: phpunit-bridge, flex
-          extensions: pdo_sqlite, redis
+          extensions: "pdo_sqlite ${{ matrix.enable-redis && ', redis' || '' }}"
           coverage: none
       - run: |
-          composer config extra.symfony.require ${{ matrix.version.symfony }}
+          composer config extra.symfony.require ${{ matrix.symfony }}
           composer update
       - run: vendor/bin/php-cs-fixer fix --dry-run --diff
-      - run: vendor/bin/phpunit --exclude-group not-${{ matrix.version.symfony }}
+      - run: vendor/bin/phpunit --exclude-group not-${{ matrix.symfony }} ${{ !matrix.enable-redis && '--exclude-group redis' || '' }}
         env:
-          SYMFONY_DEPRECATIONS_HELPER: 'disabled=1'
+          SYMFONY_DEPRECATIONS_HELPER: "disabled=1"

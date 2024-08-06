@@ -99,6 +99,8 @@ doctrine:
 The bundle can also check that redis connections are working. You should add a list of
 service names to check
 
+This will require the PHP Redis extension enabled.
+
 ```yaml
 ekreative_health_check:
     redis:

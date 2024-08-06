@@ -18,13 +18,40 @@ class HealthCheckControllerTest extends WebTestCase
             // This env connects to real redis and mysql servers
             $client = static::createClient(['environment' => 'test_travis']);
         } else {
-            // This env uses a sqlite connection and fakes the redis server
+            // This env uses a sqlite connection
             $client = static::createClient();
+        }
+
+        $client->request('GET', '/healthcheck');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json', $client->getResponse()->headers->get('content-type'));
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($data);
+        $this->assertCount(2, $data);
+
+        $this->assertIsBool($data['app']);
+        $this->assertTrue($data['app']);
+
+        $this->assertIsBool($data['database']);
+        $this->assertTrue($data['database']);
+    }
+
+    #[Group('redis')]
+    public function testActionWithRedis()
+    {
+        if (isset($_ENV['travis'])) {
+            // This env connects to real redis and mysql servers
+            $client = static::createClient(['environment' => 'test_travis']);
+        } else {
+            // This env uses a sqlite connection and fakes the redis server
+            $client = static::createClient(['environment' => 'test_with_redis']);
 
             $redis = $this->getMockBuilder(\Redis::class)
                 ->onlyMethods(['ping'])
-                ->getMock()
-            ;
+                ->getMock();
             $redis->method('ping')->willReturn(true);
 
             $client->getKernel()->getContainer()->set('redis', $redis);
@@ -86,6 +113,7 @@ class HealthCheckControllerTest extends WebTestCase
         $this->assertFalse($data['database']);
     }
 
+    #[Group('redis')]
     public function testRedisFailAction()
     {
         $client = static::createClient(['environment' => 'test_with_redis']);
@@ -104,6 +132,7 @@ class HealthCheckControllerTest extends WebTestCase
         $this->assertFalse($data['redis']);
     }
 
+    #[Group('redis')]
     public function testOptionalRedisFailAction()
     {
         $client = static::createClient(['environment' => 'test_with_redis_optional']);
@@ -134,7 +163,7 @@ class HealthCheckControllerTest extends WebTestCase
         throw new \Exception('Should not be called');
     }
 
-    #[Group('not-5.4')]
+    #[Group('not-5.4', 'redis')]
     public function testAnnoRoutes()
     {
         // This env uses a sqlite connection and fakes the redis server
@@ -142,8 +171,7 @@ class HealthCheckControllerTest extends WebTestCase
 
         $redis = $this->getMockBuilder(\Redis::class)
             ->onlyMethods(['ping'])
-            ->getMock()
-        ;
+            ->getMock();
         $redis->method('ping')->willReturn(true);
 
         $client->getKernel()->getContainer()->set('redis', $redis);
