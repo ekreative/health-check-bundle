@@ -1,0 +1,4 @@
+health-check:
+    path: /healthcheck
+    controller: Ekreative\HealthCheckBundle\Controller\HealthCheckController::healthCheckAction
+    methods: GET
