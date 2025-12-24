@@ -7,7 +7,7 @@ use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Cache\Traits\RedisProxy;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class HealthCheckController
 {
